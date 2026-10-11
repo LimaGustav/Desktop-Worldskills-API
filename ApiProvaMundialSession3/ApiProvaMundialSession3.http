@@ -1,0 +1,6 @@
+@ApiProvaMundialSession3_HostAddress = http://localhost:5215
+
+GET {{ApiProvaMundialSession3_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

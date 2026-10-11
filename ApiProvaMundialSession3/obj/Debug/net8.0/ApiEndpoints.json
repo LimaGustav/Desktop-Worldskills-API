@@ -1,0 +1,269 @@
+[
+  {
+    "ContainingType": "ApiProvaMundialSession3.Controllers.ApiService",
+    "Method": "call",
+    "RelativePath": "api/calls",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProvaMundialSession3.Controllers.ApiService",
+    "Method": "CallPorId",
+    "RelativePath": "api/calls/{callId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "callId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProvaMundialSession3.Controllers.ApiService",
+    "Method": "CallAccept",
+    "RelativePath": "api/calls/{callId}/accept",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "callId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProvaMundialSession3.Controllers.ApiService",
+    "Method": "CallDecline",
+    "RelativePath": "api/calls/{callId}/decline",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "callId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProvaMundialSession3.Controllers.ApiService",
+    "Method": "CallEnd",
+    "RelativePath": "api/calls/{callId}/end",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "callId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProvaMundialSession3.Controllers.ApiService",
+    "Method": "CallLink",
+    "RelativePath": "api/calls/{callId}/link",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "callId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "body",
+        "Type": "ApiProvaMundialSession3.DTO.LinkedCallDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProvaMundialSession3.Controllers.ApiService",
+    "Method": "GetHelth",
+    "RelativePath": "api/health",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProvaMundialSession3.Controllers.ApiService",
+    "Method": "Incidentes",
+    "RelativePath": "api/incidents",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "type",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "status",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "description",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProvaMundialSession3.Controllers.ApiService",
+    "Method": "incidentesRegister",
+    "RelativePath": "api/incidents",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "incidente",
+        "Type": "ApiProvaMundialSession3.DTO.IncidentDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProvaMundialSession3.Controllers.ApiService",
+    "Method": "IncidentePorID",
+    "RelativePath": "api/incidents/{incidentId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "incidentId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProvaMundialSession3.Controllers.ApiService",
+    "Method": "SalvarAlteracaoIncidente",
+    "RelativePath": "api/incidents/{incidentId}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "incidentId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "incidentDTO",
+        "Type": "ApiProvaMundialSession3.DTO.IncidenteDTOPatch",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProvaMundialSession3.Controllers.ApiService",
+    "Method": "acknowledge",
+    "RelativePath": "api/incidents/{incidentId}/acknowledge",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "incidentId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProvaMundialSession3.Controllers.ApiService",
+    "Method": "recomendation",
+    "RelativePath": "api/incidents/{incidentId}/recommendation",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "incidentId",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProvaMundialSession3.Controllers.ApiService",
+    "Method": "resolve",
+    "RelativePath": "api/incidents/{incidentId}/resolve",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "incidentId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProvaMundialSession3.Controllers.ApiService",
+    "Method": "GetWorldState",
+    "RelativePath": "api/state",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProvaMundialSession3.Controllers.ApiService",
+    "Method": "stations",
+    "RelativePath": "api/stations",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiProvaMundialSession3.Controllers.ApiService",
+    "Method": "unit",
+    "RelativePath": "api/units",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]
