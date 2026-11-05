@@ -2,30 +2,55 @@ using System.Data;
 using ApiProvaMundialSession3.Contexts;
 using ApiProvaMundialSession3.DTO;
 using ApiProvaMundialSession3.Models;
+using ApiProvaMundialSession3.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiProvaMundialSession3.Controllers;
 
 [ApiController, Route("api")]
-public sealed class CallsController(MainContext db) : ApiServiceBase(db)
+public sealed class CallsController(MainContext db, CallProbabilityService probability) : ApiServiceBase(db)
 {
     [HttpGet("calls")]
     public async Task<ActionResult> Calls(string? status, CancellationToken ct)
     {
-        var q = CallsQuery();
-        if (status is not null)
+        var selectedStatus = status?.ToLowerInvariant();
+        if (selectedStatus is not null
+            && selectedStatus is not ("ringing" or "active" or "ended" or "declined" or "missed"))
+            return Error(400, "O status da chamada é inválido.", "invalid_status");
+
+        await ExpireRingingCallsAsync(ct);
+        await probability.AttemptAsync(async token =>
         {
-            var s = status.ToLower();
-            if (!new[] { "ringing", "active", "ended", "declined", "missed" }.Contains(s))
-                return Error(400, "O status da chamada é inválido.", "invalid_status");
-            q = q.Where(x => x.StatusCall.StatusChamada.ToLower() == s);
-        }
+            var states = await CallStates(token);
+            db.Chamada.Add(RingingCallFactory.Create(states["ringing"]));
+            await db.SaveChangesAsync(token);
+        }, ct);
+
+        var q = CallsQuery();
+        if (selectedStatus is not null)
+            q = q.Where(x => x.StatusCall.StatusChamada.ToLower() == selectedStatus);
         var calls = await q.ToListAsync(ct);
         var ringing = await db
             .Chamada.AsNoTracking()
             .CountAsync(x => x.StatusCall.StatusChamada.ToLower() == "ringing", ct);
         return Ok(new CallsDto(DateTimeOffset.UtcNow, ringing, calls.Select(Call).ToList()));
+    }
+
+    private async Task ExpireRingingCallsAsync(CancellationToken ct)
+    {
+        var states = await CallStates(ct);
+        var now = DateTime.UtcNow;
+        var cutoff = now.AddSeconds(-40);
+
+        await db.Chamada
+            .Where(x => x.StatusCallId == states["ringing"] && x.StartedAt <= cutoff)
+            .ExecuteUpdateAsync(
+                setters => setters
+                    .SetProperty(x => x.StatusCallId, states["missed"])
+                    .SetProperty(x => x.EndedAt, now),
+                ct
+            );
     }
 
     [HttpGet("calls/{callId:int}")]
