@@ -1,1 +1,24 @@
+# Visual Studio and editor files
+.vs/
 vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# .NET build outputs
+**/bin/
+**/obj/
+**/TestResults/
+*.nupkg
+*.snupkg
+
+# Local tooling and temporary files
+.tools/
+*.log
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
