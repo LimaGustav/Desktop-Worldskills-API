@@ -2,7 +2,10 @@ USE [master]
 GO
 /****** Object:  Database [TESTE]    Script Date: 08/10/2026 13:45:19 ******/
 
-USE [TESTE]
+CREATE DATABASE SmartCity
+GO
+
+USE SmartCity
 GO
 /****** Object:  Table [dbo].[Chamada]    Script Date: 08/10/2026 13:45:20 ******/
 SET ANSI_NULLS ON
@@ -233,11 +236,11 @@ CREATE TABLE [dbo].[Unidade](
 GO
 SET IDENTITY_INSERT [dbo].[Chamada] ON 
 GO
-INSERT [dbo].[Chamada] ([id], [statusCallID], [callerName], [callerNumber], [reportedType], [descricao], [locationID], [startedAt], [answeredAt], [endedAt], [linkedIncidentId]) VALUES (1, 2, N'João Silva', N'11999991111', N'fire', N'Fumaça alta vista no prédio comercial', 7, CAST(N'2026-03-10T10:00:00.000' AS DateTime), CAST(N'2026-03-10T10:00:05.000' AS DateTime), CAST(N'2026-03-10T10:02:30.000' AS DateTime), 16)
+INSERT [dbo].[Chamada] ([id], [statusCallID], [callerName], [callerNumber], [reportedType], [descricao], [locationID], [startedAt], [answeredAt], [endedAt], [linkedIncidentId]) VALUES (1, 3, N'João Silva', N'11999991111', N'fire', N'Fumaça alta vista no prédio comercial', 7, CAST(N'2026-03-10T10:00:00.000' AS DateTime), CAST(N'2026-03-10T10:00:05.000' AS DateTime), CAST(N'2026-03-10T10:02:30.000' AS DateTime), 16)
 GO
-INSERT [dbo].[Chamada] ([id], [statusCallID], [callerName], [callerNumber], [reportedType], [descricao], [locationID], [startedAt], [answeredAt], [endedAt], [linkedIncidentId]) VALUES (2, 3, N'Maria Santos', N'11988882222', N'crime', N'Assalto em andamento na loja de conveniência', 5, CAST(N'2026-03-10T10:15:00.000' AS DateTime), CAST(N'2026-03-10T10:15:03.000' AS DateTime), NULL, NULL)
+INSERT [dbo].[Chamada] ([id], [statusCallID], [callerName], [callerNumber], [reportedType], [descricao], [locationID], [startedAt], [answeredAt], [endedAt], [linkedIncidentId]) VALUES (2, 2, N'Maria Santos', N'11988882222', N'crime', N'Assalto em andamento na loja de conveniência', 5, CAST(N'2026-03-10T10:15:00.000' AS DateTime), CAST(N'2026-03-10T10:15:03.000' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[Chamada] ([id], [statusCallID], [callerName], [callerNumber], [reportedType], [descricao], [locationID], [startedAt], [answeredAt], [endedAt], [linkedIncidentId]) VALUES (3, 3, N'Anônimo', NULL, N'medical', N'Pessoa desacordada na via pública', 6, CAST(N'2026-03-10T10:30:00.000' AS DateTime), NULL, NULL, 2)
+INSERT [dbo].[Chamada] ([id], [statusCallID], [callerName], [callerNumber], [reportedType], [descricao], [locationID], [startedAt], [answeredAt], [endedAt], [linkedIncidentId]) VALUES (3, 1, N'Anônimo', NULL, N'medical', N'Pessoa desacordada na via pública', 6, CAST(N'2026-03-10T10:30:00.000' AS DateTime), NULL, NULL, 2)
 GO
 SET IDENTITY_INSERT [dbo].[Chamada] OFF
 GO
