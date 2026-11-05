@@ -1,0 +1,65 @@
+name: Deploy WebAPI
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o codigo
+        uses: builtin:checkout
+
+      - name: Definir nomes e porta
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
+        run: |
+          set -eu
+          NUMBERS=$(printf '%s' "$REPO_NAME" | tr -cd '0-9')
+          SLUG=$(printf '%s' "$REPO_NAME" | tr '[:upper:]' '[:lower:]' | tr -cd 'a-z0-9-')
+          SUFFIX=${NUMBERS:-$SLUG}
+          PORT=${NUMBERS:+50$NUMBERS}
+          PORT=${PORT:-5080}
+          if [ "${#NUMBERS}" -gt 3 ] || [ "$PORT" -lt 1024 ] || [ "$PORT" -gt 65535 ]; then
+            echo "Porta calculada invalida: $PORT. Usando 5080."
+            PORT=5080
+          fi
+          echo "CONTAINER=api-competidor-container-$SUFFIX" >> "$GITHUB_ENV"
+          echo "IMAGE=webapi-imagem-local-$SUFFIX:${GITHUB_SHA}" >> "$GITHUB_ENV"
+          echo "VOLUME=api-competidor-temp-$SUFFIX" >> "$GITHUB_ENV"
+          echo "PORT=$PORT" >> "$GITHUB_ENV"
+          echo "Porta de deploy: $PORT"
+
+      - name: Validar Docker e configuracao
+        env:
+          ConnectionStrings__DefaultConnection: ${{ secrets.DB_CONNECTION_STRING }}
+        run: |
+          set -eu
+          docker version
+          docker network inspect simuladosuzano_gitea > /dev/null
+          test -n "$ConnectionStrings__DefaultConnection"
+
+      - name: Construir imagem
+        run: |
+          set -eu
+          docker build -t "$IMAGE" -f ApiProvaMundialSession3/Dockerfile ApiProvaMundialSession3
+
+      - name: Substituir container
+        env:
+          ConnectionStrings__DefaultConnection: ${{ secrets.DB_CONNECTION_STRING }}
+        run: |
+          set -eu
+          docker volume create "$VOLUME" > /dev/null
+          docker stop "$CONTAINER" || true
+          docker rm "$CONTAINER" || true
+          docker run -d \
+            --name "$CONTAINER" \
+            -p "$PORT:8080" \
+            --network simuladoestadualbruno_gitea \
+            --mount "type=volume,src=$VOLUME,dst=/app/temp" \
+            --restart always \
+            -e ConnectionStrings__DefaultConnection \
+            "$IMAGE"
+          sleep 3
+          test "$(docker inspect -f '{{.State.Running}}' "$CONTAINER")" = true
